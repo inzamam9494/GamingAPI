@@ -1,5 +1,6 @@
 package com.example.callinggamesapiapp.network
 
+import com.example.callinggamesapiapp.model.DetailedItem
 import com.example.callinggamesapiapp.model.GamesItem
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -14,4 +15,13 @@ class GameService @Inject constructor(private val gameApi: GameApi) {
             games.body() ?: emptyList()
         }
     }
+
+    // step 13
+    suspend fun getGameById(id: Int): List<DetailedItem> {
+        return withContext(Dispatchers.IO){
+            val game = gameApi.getGamesById(id)
+            game.body()!!
+        }
+    }
+
 }

@@ -1,5 +1,6 @@
 package com.example.callinggamesapiapp.Repository
 
+import com.example.callinggamesapiapp.model.domainItem.DetailedItemUI
 import com.example.callinggamesapiapp.model.domainItem.GameItemUI
 import javax.inject.Inject
 
