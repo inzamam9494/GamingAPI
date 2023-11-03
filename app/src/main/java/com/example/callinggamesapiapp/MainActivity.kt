@@ -7,7 +7,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
-import com.example.callinggamesapiapp.ui.Home.HomeScreen
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.callinggamesapiapp.model.domainItem.DetailedItemUI
+import com.example.callinggamesapiapp.ui.Home.NavigationScreen
 import com.example.callinggamesapiapp.ui.theme.CallingGamesAPIAppTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -22,7 +24,11 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    HomeScreen()
+                    NavigationScreen(
+                        modifier = Modifier,
+                        detailedItemUI = DetailedItemUI(),
+                        homeViewModel = viewModel()
+                    )
                 }
             }
         }
