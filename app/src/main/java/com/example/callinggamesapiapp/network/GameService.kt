@@ -17,11 +17,13 @@ class GameService @Inject constructor(private val gameApi: GameApi) {
     }
 
     // step 13
-    suspend fun getGameById(id: Int): List<DetailedItem> {
-        return withContext(Dispatchers.IO){
+    suspend fun getGameById(id: Int): DetailedItem {
+
+        return withContext(Dispatchers.IO) {
             val game = gameApi.getGamesById(id)
             game.body()!!
         }
+
     }
 
 }

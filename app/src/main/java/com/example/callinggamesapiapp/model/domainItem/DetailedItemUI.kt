@@ -10,4 +10,5 @@ data class DetailedItemUI(
     val description: String? = null
 )
 
+
 fun DetailedItem.toDetailedItemUI() = DetailedItemUI(id, title, thumbnail, description)

@@ -6,7 +6,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.callinggamesapiapp.model.domainItem.DetailedItemUI
+import com.example.callinggamesapiapp.ConstantApi.Companion.KEY_GAME_ID
 
 enum class NavScreen{
     Home,
@@ -17,7 +17,6 @@ enum class NavScreen{
 fun NavigationScreen(
     modifier: Modifier,
     navController: NavHostController = rememberNavController(),
-    detailedItemUI: DetailedItemUI,
     homeViewModel: HomeViewModel
 ) {
     NavHost(navController = navController,
@@ -31,8 +30,8 @@ fun NavigationScreen(
             DetailedScreen(
                 onBackClick = { navController.navigateUp() },
                 gameViewModel = homeViewModel,
-                detailItem = detailedItemUI,
-                modifier = Modifier
+                modifier = Modifier,
+                id = it.arguments?.getString(KEY_GAME_ID)?: "1"
             )
         }
     }

@@ -17,10 +17,8 @@ class GameRepository @Inject constructor(private val gameService: GameService) {
     }
 
     //step 16
-   suspend fun getGamesById(id: Int): List<DetailedItemUI> {
-       return gameService.getGameById(id).map {
-           it.toDetailedItemUI()
-       }
+   suspend fun getGamesById(id: Int): DetailedItemUI {
+       return gameService.getGameById(id).toDetailedItemUI()
    }
 }
 

@@ -1,6 +1,7 @@
 package com.example.callinggamesapiapp.ui.Home
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.height
@@ -20,12 +21,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
 import com.example.callinggamesapiapp.model.domainItem.GameItemUI
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -38,7 +42,15 @@ fun HomeScreen(
     val games = gameViewModel.games.observeAsState(listOf()).value
 
     Scaffold(topBar = {
-        Surface {
+        Surface(
+            modifier = Modifier
+                .background(
+                    brush = Brush.verticalGradient(
+                        0f to Color.Transparent,
+                        0.1f to Color.White
+                    )
+                )
+        ) {
             CenterAlignedTopAppBar(title = {
                 Text(
                     text = "Game API",
@@ -86,10 +98,13 @@ fun GameCard(
             )
             Column(modifier = Modifier.weight(0.1f)) {
                 Column(modifier = Modifier.padding(8.dp)) {
-                    Text(
-                        text = gameItem.title!!,
-                        style = MaterialTheme.typography.titleMedium
-                    )
+                    gameItem.title?.let {
+                        Text(
+                            text = it,
+                            style = MaterialTheme.typography.titleMedium
+                        )
+                    }
+
                     gameItem.shortDescription?.let {
                         Text(
                             text = it,
@@ -97,6 +112,7 @@ fun GameCard(
                             overflow = TextOverflow.Ellipsis
                         )
                     }
+
                 }
 
             }

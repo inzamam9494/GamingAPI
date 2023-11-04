@@ -2,10 +2,10 @@ package com.example.callinggamesapiapp.model
 
 // step 3
 data class GamesItem(
-    val id: Int? = null,
-    val title: String? = null,
-    val thumbnail: String? = null,
-    val shortDescription: String? = null
+    val id: Int,
+    val title: String,
+    val thumbnail: String,
+    val shortDescription: String
 //    val developer: String,
 //    val freetogame_profile_url: String,
 //    val game_url: String,

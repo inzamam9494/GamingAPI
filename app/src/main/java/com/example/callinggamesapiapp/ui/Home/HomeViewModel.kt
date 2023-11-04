@@ -26,8 +26,8 @@ class HomeViewModel @Inject constructor(
     val games: LiveData<List<GameItemUI>> get() = _games
 
     //step 18.1
-    private val _gameById = MutableLiveData<List<DetailedItemUI>>()
-    val gameById: LiveData<List<DetailedItemUI>> get() = _gameById
+    private val _gameById = MutableLiveData<DetailedItemUI>()
+    val gameById: LiveData<DetailedItemUI> get() = _gameById
 
     init {
         getGames()
@@ -45,11 +45,12 @@ class HomeViewModel @Inject constructor(
     }
 
     //step 18.2
-    fun getGamesById(id: Int) {
+    fun getGamesById(id:Int) {
         viewModelScope.launch {
             try {
                 val game = getGamesByIdUseCase(id)
                 _gameById.value = game
+                Log.d("gameViewModel2", "getByIdGames $game")
             } catch (_:Exception){}
         }
     }
