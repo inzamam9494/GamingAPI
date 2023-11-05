@@ -23,10 +23,10 @@ fun NavigationScreen(
         startDestination = NavScreen.Home.name){
         composable(NavScreen.Home.name){
             HomeScreen(gameViewModel = homeViewModel,
-                onClickDetail = { navController.navigate(NavScreen.Detail.name) },
+                onClickDetail = { navController.navigate(NavScreen.Detail.name + "/${KEY_GAME_ID}") },
                 modifier = Modifier)
         }
-        composable(NavScreen.Detail.name){
+        composable(NavScreen.Detail.name + "/${KEY_GAME_ID}"){
             DetailedScreen(
                 onBackClick = { navController.navigateUp() },
                 gameViewModel = homeViewModel,

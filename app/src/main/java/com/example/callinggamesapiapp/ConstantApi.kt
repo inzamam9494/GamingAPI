@@ -7,7 +7,7 @@ class ConstantApi {
         const val BASE_URL = "https://www.freetogame.com/api/"
         const val GAME_ENDPOINT = "games"
         const val GAME_ID_ENDPOINT = "game?id"
-        const val KEY_GAME_ID = "com.example.callinggamesapiapp.id"
+        const val KEY_GAME_ID = "com.jorgesanaguaray.consumeapijetpackcomposenavigationtutorial.id"
     }
 
     // step 12 for navigation screen
