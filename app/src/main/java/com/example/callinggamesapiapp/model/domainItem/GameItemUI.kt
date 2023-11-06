@@ -5,10 +5,10 @@ import com.example.callinggamesapiapp.model.GamesItem
 // step 7
 
 data class GameItemUI(
-    val id: Int? = null,
-    val title: String? = null,
-    val thumbnail: String? = null,
-    val shortDescription: String? = null
+    val id: Int?,
+    val title: String?,
+    val thumbnail: String?,
+    val shortDescription: String?
 )
 
 fun GamesItem.toGameItemUI() = GameItemUI(id, title, thumbnail, shortDescription)

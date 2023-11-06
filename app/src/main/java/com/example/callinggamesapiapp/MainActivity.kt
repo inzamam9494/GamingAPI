@@ -8,7 +8,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.callinggamesapiapp.ui.Home.NavigationScreen
+import androidx.navigation.compose.rememberNavController
+import com.example.callinggamesapiapp.ui.Home.SetupNavHost
 import com.example.callinggamesapiapp.ui.theme.CallingGamesAPIAppTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -23,10 +24,8 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    NavigationScreen(
-                        modifier = Modifier,
-                        homeViewModel = viewModel()
-                    )
+                    val navController = rememberNavController()
+                    SetupNavHost(navController = navController, gameViewModel = viewModel())
                 }
             }
         }

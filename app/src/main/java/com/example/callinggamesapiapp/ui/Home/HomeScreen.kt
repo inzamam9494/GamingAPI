@@ -33,6 +33,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
 import com.example.callinggamesapiapp.model.domainItem.GameItemUI
 
@@ -41,7 +42,7 @@ import com.example.callinggamesapiapp.model.domainItem.GameItemUI
 @Composable
 fun HomeScreen(
     gameViewModel: HomeViewModel,
-    onClickDetail: () -> Unit,
+    navController: NavController,
     modifier: Modifier
 ) {
 
@@ -78,7 +79,7 @@ fun HomeScreen(
                 items(games) { game ->
                     GameCard(
                         gameItem = game,
-                        onClick = onClickDetail,
+                        navController = navController,
                         modifier = Modifier
                     )
                 }
@@ -91,12 +92,12 @@ fun HomeScreen(
 @Composable
 fun GameCard(
     gameItem: GameItemUI,
-    onClick: () -> Unit,
+    navController: NavController,
     modifier: Modifier
 ) {
 
     Card(
-        onClick = onClick,
+        onClick = { navController.navigate(Screens.Detail.route + "/${gameItem.id}") },
         modifier = Modifier.padding(8.dp),
         elevation = CardDefaults.cardElevation(10.dp),
     ) {
@@ -112,20 +113,16 @@ fun GameCard(
             )
             Column(modifier = Modifier.weight(0.1f)) {
                 Column(modifier = Modifier.padding(8.dp)) {
-                    gameItem.title?.let {
                         Text(
-                            text = it,
+                            text = gameItem?.title?: "",
                             style = MaterialTheme.typography.titleMedium
                         )
-                    }
-
-                    gameItem.shortDescription?.let {
                         Text(
-                            text = it,
+                            text = gameItem?.shortDescription?:"",
                             maxLines = 2,
                             overflow = TextOverflow.Ellipsis
                         )
-                    }
+
 
                 }
 

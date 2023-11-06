@@ -33,23 +33,23 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
-import com.example.callinggamesapiapp.model.domainItem.DetailedItemUI
 import kotlin.math.min
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DetailedScreen(
-    onBackClick: () -> Unit,
     gameViewModel: HomeViewModel,
     modifier: Modifier,
-    id: String
+    id: String,
+    navController: NavController
 ) {
     // Fetch the detailed information only if it hasn't been fetched yet.
 
     gameViewModel.getGamesById(id.toInt())
-    val gameDetail = gameViewModel.gameById.observeAsState().value
+    val game = gameViewModel.gameById.observeAsState().value
 
     Scaffold(topBar = {
         TopAppBar(title = {
@@ -61,7 +61,7 @@ fun DetailedScreen(
 
         },
             navigationIcon = {
-                IconButton(onClick = onBackClick) {
+                IconButton(onClick = { navController.navigateUp() }) {
                     Icon(
                         imageVector = Icons.Default.ArrowBack,
                         contentDescription = null
@@ -74,7 +74,40 @@ fun DetailedScreen(
                 .padding(it)
         ) {
             LazyColumn {
-                item { gameDetail?.let { it1 -> GameScreen(detailItem = it1, modifier = Modifier) } }
+
+                item {
+
+                    Column(
+                        verticalArrangement = Arrangement.Center,
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        Text(
+                            text = game?.title ?: "",
+                            style = MaterialTheme.typography.titleLarge,
+                            fontWeight = FontWeight.Bold,
+                            textAlign = TextAlign.Center
+                        )
+
+                        Image(
+                            painter = rememberAsyncImagePainter(game?.thumbnail),
+                            contentDescription = null,
+                            contentScale = ContentScale.FillBounds,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(300.dp)
+                                .padding(10.dp)
+                                .shadow(5.dp, shape = RoundedCornerShape(16.dp))
+                        )
+
+                        Text(
+                            text = game?.description ?: "",
+                            style = MaterialTheme.typography.titleLarge,
+                            modifier = Modifier.padding(10.dp)
+                        )
+
+                    }
+
+                }
 
             }
 
@@ -83,41 +116,40 @@ fun DetailedScreen(
 }
 
 
-@Composable
-fun GameScreen(
-    detailItem: DetailedItemUI,
-    modifier: Modifier
-) {
-    Column(modifier = Modifier.padding(10.dp),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally) {
-        detailItem.title?.let {
-            Text(
-                text = it,
-                style = MaterialTheme.typography.titleLarge,
-                fontWeight = FontWeight.Bold,
-                textAlign = TextAlign.Center
-            )
-        }
-
-        Image(
-            painter = rememberAsyncImagePainter(model = detailItem.thumbnail),
-            contentDescription = null,
-            contentScale = ContentScale.FillBounds,
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(300.dp)
-                .padding(10.dp)
-                .shadow(5.dp,shape = RoundedCornerShape(16.dp))
-        )
-
-        detailItem.description?.let { Text(text = it,
-            style = MaterialTheme.typography.titleLarge,
-            modifier = Modifier.padding(5.dp))}
-
-
-    }
-}
+//@Composable
+//fun GameScreen(
+//    detailItem: DetailedItemUI,
+//    modifier: Modifier
+//) {
+//    Column(modifier = Modifier.padding(10.dp),
+//        verticalArrangement = Arrangement.Center,
+//        horizontalAlignment = Alignment.CenterHorizontally) {
+//            Text(
+//                text = detailItem.title,
+//                style = MaterialTheme.typography.titleLarge,
+//                fontWeight = FontWeight.Bold,
+//                textAlign = TextAlign.Center
+//            )
+//
+//
+//        Image(
+//            painter = rememberAsyncImagePainter(model = detailItem.thumbnail),
+//            contentDescription = null,
+//            contentScale = ContentScale.FillBounds,
+//            modifier = Modifier
+//                .fillMaxWidth()
+//                .height(300.dp)
+//                .padding(10.dp)
+//                .shadow(5.dp,shape = RoundedCornerShape(16.dp))
+//        )
+//
+//         Text(text = detailItem.description,
+//            style = MaterialTheme.typography.titleLarge,
+//            modifier = Modifier.padding(5.dp))
+//
+//
+//    }
+//}
 
 
 // for Scroll Edge fading
@@ -146,7 +178,8 @@ fun Modifier.fadingEdges(
 
             val bottomColors = listOf(Color.Black, Color.Transparent)
             val bottomEndY = size.height - scrollState.maxValue + scrollState.value
-            val bottomGradientHeight = min(bottomEdgeHeight.toPx(), scrollState.maxValue.toFloat() - scrollState.value)
+            val bottomGradientHeight =
+                min(bottomEdgeHeight.toPx(), scrollState.maxValue.toFloat() - scrollState.value)
             if (bottomGradientHeight != 0f) drawRect(
                 brush = Brush.verticalGradient(
                     colors = bottomColors,

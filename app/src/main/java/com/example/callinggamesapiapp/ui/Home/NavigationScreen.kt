@@ -5,35 +5,39 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
 import com.example.callinggamesapiapp.ConstantApi.Companion.KEY_GAME_ID
+import com.example.callinggamesapiapp.ConstantApi.Screens.DETAIL_SCREEN
+import com.example.callinggamesapiapp.ConstantApi.Screens.HOME_SCREEN
 
-enum class NavScreen{
-    Home,
-    Detail
+sealed class Screens(val route: String) {
+
+    object Home : Screens(route = HOME_SCREEN)
+    object Detail : Screens(route = DETAIL_SCREEN)
+
 }
 
 @Composable
-fun NavigationScreen(
-    modifier: Modifier,
-    navController: NavHostController = rememberNavController(),
-    homeViewModel: HomeViewModel
-) {
-    NavHost(navController = navController,
-        startDestination = NavScreen.Home.name){
-        composable(NavScreen.Home.name){
-            HomeScreen(gameViewModel = homeViewModel,
-                onClickDetail = { navController.navigate(NavScreen.Detail.name + "/${KEY_GAME_ID}") },
-                modifier = Modifier)
-        }
-        composable(NavScreen.Detail.name + "/${KEY_GAME_ID}"){
-            DetailedScreen(
-                onBackClick = { navController.navigateUp() },
-                gameViewModel = homeViewModel,
-                modifier = Modifier,
-                id = it.arguments?.getString(KEY_GAME_ID)?: "1"
+fun SetupNavHost(navController: NavHostController, gameViewModel: HomeViewModel) {
+
+    NavHost(navController = navController, startDestination = Screens.Home.route) {
+
+        composable(route = Screens.Home.route) {
+            HomeScreen(
+                gameViewModel = gameViewModel, navController = navController,
+                modifier = Modifier
             )
         }
+
+        composable(route = Screens.Detail.route + "/{$KEY_GAME_ID}") {
+            DetailedScreen(
+                id = it.arguments?.getString(KEY_GAME_ID) ?: "1",
+                gameViewModel = gameViewModel,
+                navController = navController,
+                modifier = Modifier
+            )
+        }
+
     }
+
 }
 

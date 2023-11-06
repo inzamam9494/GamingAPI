@@ -15,5 +15,5 @@ interface GameApi {
     suspend fun getGames(): Response<List<GamesItem>>
 
     @GET(GAME_ID_ENDPOINT)
-    suspend fun getGamesById(@Query(value = "id")id: Int): Response<DetailedItem>
+    suspend fun getGamesById(@Query(value = "id") id: Int): Response<DetailedItem>
 }

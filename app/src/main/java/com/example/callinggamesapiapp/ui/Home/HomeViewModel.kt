@@ -38,7 +38,7 @@ class HomeViewModel @Inject constructor(
             try {
                 val games = getGamesUseCase()
                 _games.value = games
-                Log.d("gameViewModel", "getGames $games")
+                Log.d("gameViewModel1", "getGames $games")
             } catch (_: Exception) {
             }
         }
