@@ -112,7 +112,7 @@ fun GameCard(
                     .shadow(2.dp, RoundedCornerShape(20.dp))
             )
             Column(modifier = Modifier.weight(0.1f)) {
-                Column(modifier = Modifier.padding(8.dp)) {
+                Column(modifier = Modifier.padding(7.dp)) {
                         Text(
                             text = gameItem?.title?: "",
                             style = MaterialTheme.typography.titleMedium
